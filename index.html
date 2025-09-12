@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Sportify</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="util.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <nav class="flex align">
+        <div class="logoes flex align">
+            <div class="logo point"><img src="assets/logo.svg" alt="" height="24px" width="24px"></div>
+            <div class="home flex align justify"><img src="assets/home.svg" alt="" height="24px" width="24px"></div>
+            <div class="search flex align">
+                <svg class="magni point" fill="rgb(179,179,179)" xmlns="http://www.w3.org/2000/svg"
+                    data-encore-id="icon" role="img" aria-hidden="true" class="e-91000-icon e-91000-baseline"
+                    viewBox="0 0 24 24">
+                    <path
+                        d="M10.533 1.27893C5.35215 1.27893 1.12598 5.41887 1.12598 10.5579C1.12598 15.697 5.35215 19.8369 10.533 19.8369C12.767 19.8369 14.8235 19.0671 16.4402 17.7794L20.7929 22.132C21.1834 22.5226 21.8166 22.5226 22.2071 22.132C22.5976 21.7415 22.5976 21.1083 22.2071 20.7178L17.8634 16.3741C19.1616 14.7849 19.94 12.7634 19.94 10.5579C19.94 5.41887 15.7138 1.27893 10.533 1.27893ZM3.12598 10.5579C3.12598 6.55226 6.42768 3.27893 10.533 3.27893C14.6383 3.27893 17.94 6.55226 17.94 10.5579C17.94 14.5636 14.6383 17.8369 10.533 17.8369C6.42768 17.8369 3.12598 14.5636 3.12598 10.5579Z">
+                    </path>
+                </svg>
+                <input type="text" value="" placeholder="What do you want to play?">
+                <svg class="bar" xmlns="http://www.w3.org/2000/svg" width="8" height="24" viewBox="0 0 16 24"
+                    fill="white">
+                    <rect x="7" y="-10" width="1" height="60" />
+                </svg>
+                <svg class="browse point" fill="rgb(179,179,179)" xmlns="http://www.w3.org/2000/svg"
+                    data-encore-id="icon" role="img" aria-hidden="true" class="e-91000-icon e-91000-baseline"
+                    viewBox="0 0 24 24">
+                    <path d="M15 15.5c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2"></path>
+                    <path
+                        d="M1.513 9.37A1 1 0 0 1 2.291 9h19.418a1 1 0 0 1 .979 1.208l-2.339 11a1 1 0 0 1-.978.792H4.63a1 1 0 0 1-.978-.792l-2.339-11a1 1 0 0 1 .201-.837zM3.525 11l1.913 9h13.123l1.913-9zM4 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v4h-2V3H6v3H4z">
+                    </path>
+                </svg>
+            </div>
+        </div>
+        <div class="links flex align">
+            <div class="support"><a href="">Premium</a> <a href="">Support</a> <a href="">Download</a> </div>
+            <div class="divide"> | </div>
+            <div class="signin flex align justify">
+                <div class="install align"><svg fill="rgba(179,179,179,1)" xmlns="http://www.w3.org/2000/svg"
+                        data-encore-id="icon" role="img" aria-hidden="true" class="e-91000-icon e-91000-baseline"
+                        viewBox="0 0 16 16"
+                        style="--encore-icon-height: var(--encore-graphic-size-decorative-smaller); --encore-icon-width: var(--encore-graphic-size-decorative-smaller);">
+                        <path
+                            d="M4.995 8.745a.75.75 0 0 1 1.06 0L7.25 9.939V4a.75.75 0 0 1 1.5 0v5.94l1.195-1.195a.75.75 0 1 1 1.06 1.06L8 12.811l-.528-.528-.005-.005-2.472-2.473a.75.75 0 0 1 0-1.06">
+                        </path>
+                        <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13"></path>
+                    </svg> Install App</div>
+                <div class="signup">Sign up</div>
+                <button class="login flex align justify">Log in</button>
+            </div>
+        </div>
+    </nav>
+    <div class="container flex align justify">
+        <div class="left">
+            <img src="assets/cross.svg" height="24px" id="cross" class="point">
+            <div class="heading">
+                <h2>Your Songs</h2>
+                <div class="point plus flex justify align"><img src="assets/loop.svg" height="24px" onclick="setloop()">
+                </div>
+            </div>
+            <div class="create"></div>
+            <div class="about">
+                <a class="point" href="">Legal</a>
+                <a class="point" href="">Safety & Privacy Centre</a>
+                <a class="point" href="">Privacy Policy</a>
+                <a class="point" href="">Cookies</a>
+                <a class="point" href="">About Ads</a>
+                <a class="point" href="">Accessiblity</a>
+                <p class="point">Cookies</p>
+                <button class="point"><img src="assets/globe.svg" height="14px"> English</button>
+            </div>
+        </div>
+        <div class="right">
+            <img class="ham point" src="assets/ham.svg" alt="">
+            <div class="head">
+                <h2 class="point">Trending Playlists</h2>
+                <span class="point">Show all</span>
+            </div>
+            <div class="cardcont flex align">
+            </div>
+            <div class="playbar flex justify">
+                <div class="songdata">
+                    <div class="songname"></div>
+                    <div class="songtime">1:1</div>
+                </div>
+                <div class="controles ">
+                    <button><img src="assets/pre.svg" class="playpause point" id="pre"></button>
+                    <button><img src="assets/pause.svg" class="playpause point" id="playbutton"></button>
+                    <button><img src="assets/next.svg" class="playpause point" id="next"></button>
+                </div>
+                <div class="time point" id="timeBar">
+                    <div class="pointer" id="ball"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- <footer>
+        <div class="footleft">
+            <h2>Preview of sportify</h2>
+            <p>Sign up to get unlimited songs and podcasts with occasional ads. No credit card needed.</p>
+        </div>
+        <div class="footright">
+            <button onclick="temp()">
+                Sign up free
+            </button>
+        </div>
+    </footer> -->
+    <!-- <script>
+        function temp() {
+            document.querySelector("footer").remove()
+            document.querySelector(".container").style.height = "90vh"
+        }
+    </script> -->
+    <script src="script.js"></script>
+</body>
+
+</html>
