@@ -22,7 +22,7 @@ async function getthumbnail(playlist) {
     return x.href
 }
 async function getplaylists(){
-    let r= await fetchdata("http://127.0.0.1:5500/webdev/clones/sportify/playlists")
+    let r= await fetchdata("/webdev/clones/sportify/playlists")
     let div=document.createElement("div")
     div.innerHTML=r;
     let x=div.querySelectorAll(".icon-directory")
