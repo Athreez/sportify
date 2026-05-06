@@ -46,7 +46,7 @@ async function getplaylists(){
             div.addEventListener("click", async () => {
                 // Pause current playback and reset state
                 audio.pause()
-                playbutton.src="assets/playbarplay.svg"
+                playbutton.querySelector("img").src="assets/playbarplay.svg"
                 cur_song = -1
                 
                 // Load new playlist
@@ -111,6 +111,13 @@ function play_song(){
     audio.play()
 }
 
+function formatTime(seconds) {
+  if (isNaN(seconds)) return "00:00"
+  const mins = Math.floor(seconds / 60)
+  const secs = Math.floor(seconds % 60)
+  return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`
+}
+
 function attachEventListeners(){
     next.addEventListener("click",()=>{
         if(songs.length === 0 || cur_song === -1) return
@@ -146,13 +153,19 @@ function attachEventListeners(){
         }
     })
 
+    audio.addEventListener("loadedmetadata",()=>{
+        document.querySelector(".songtime").innerHTML = "00:00 / " + formatTime(audio.duration)
+    })
+
     audio.addEventListener("timeupdate",()=>{
         if(!isDragging) {
-            const progress = (audio.currentTime / audio.duration) * 100
+            const progress = isNaN(audio.duration) ? 0 : (audio.currentTime / audio.duration) * 100
             document.querySelector(".progress-fill").style.width = progress + "%"
             ball.style.left = progress + "%"
         }
-        document.querySelector(".songtime").innerHTML=formatTime(audio.currentTime)+"/"+formatTime(audio.duration)
+        const currentTime = formatTime(audio.currentTime)
+        const duration = isNaN(audio.duration) ? "00:00" : formatTime(audio.duration)
+        document.querySelector(".songtime").innerHTML = currentTime + " / " + duration
     })
     audio.addEventListener("ended",()=>{
         if(songs.length === 0 || cur_song === -1) return
