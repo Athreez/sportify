@@ -18,7 +18,10 @@ function initControls(){
 function setloop(){
     loop=!loop
     console.log(loop)
-    document.querySelector(".plus").classList.toggle("grey")
+    let loopBtn = document.getElementById("loopbtn")
+    if(loopBtn) {
+        loopBtn.classList.toggle("active")
+    }
 }
 async function fetchJSON(url){
     let response = await fetch(url)
@@ -41,10 +44,23 @@ async function getplaylists(){
                             <img src="${thumbnailPath}">
                             <h3>${playlistData.title}</h3>`
             div.addEventListener("click", async () => {
+                // Pause current playback and reset state
+                audio.pause()
+                playbutton.src="assets/playbarplay.svg"
+                cur_song = -1
+                
+                // Load new playlist
                 await getsongs(playlistInfo.path)
-                cur_song = 0;
-                document.querySelector(".song").classList.add("currentsong")
-                play_song()
+                
+                // Start playing first song
+                if(songs.length > 0) {
+                    cur_song = 0
+                    let firstSong = document.querySelector(".song")
+                    if(firstSong) {
+                        firstSong.classList.add("currentsong")
+                    }
+                    play_song()
+                }
             })
             document.querySelector(".cardcont").appendChild(div)
             playlists.push(playlistInfo.path)
@@ -86,7 +102,7 @@ async function getsongs(playlistPath){
     }
 }
 function play_song(){
-    playbutton.src="assets/pause.svg"
+    playbutton.querySelector("img").src="assets/pause.svg"
     document.querySelector(".playbar").style.opacity=1;
     let songname=songs[cur_song].split('/').pop()
     document.querySelector(".songname").innerHTML=songname.slice(0,songname.length-4)
@@ -97,32 +113,49 @@ function play_song(){
 
 function attachEventListeners(){
     next.addEventListener("click",()=>{
-        document.querySelectorAll(".song")[cur_song].classList.remove("currentsong")
+        if(songs.length === 0 || cur_song === -1) return
+        let songElements = document.querySelectorAll(".song")
+        if(songElements[cur_song]) {
+            songElements[cur_song].classList.remove("currentsong")
+        }
         cur_song=(cur_song+1)%songs.length
-        document.querySelectorAll(".song")[cur_song].click()
+        if(songElements[cur_song]) {
+            songElements[cur_song].click()
+        }
     })
     pre.addEventListener("click",()=>{
-        document.querySelectorAll(".song")[cur_song].classList.remove("currentsong")
+        if(songs.length === 0 || cur_song === -1) return
+        let songElements = document.querySelectorAll(".song")
+        if(songElements[cur_song]) {
+            songElements[cur_song].classList.remove("currentsong")
+        }
         cur_song=(cur_song-1+songs.length)%songs.length
-        document.querySelectorAll(".song")[cur_song].click()
+        if(songElements[cur_song]) {
+            songElements[cur_song].click()
+        }
     })
 
     playbutton.addEventListener("click",()=>{
         if(audio.paused){
-            playbutton.src="assets/pause.svg"
+            playbutton.querySelector("img").src="assets/pause.svg"
             audio.play()
         }
         else{
-            playbutton.src="assets/playbarplay.svg"
+            playbutton.querySelector("img").src="assets/playbarplay.svg"
             audio.pause()
         }
     })
 
     audio.addEventListener("timeupdate",()=>{
-        if(!isDragging)ball.style.left=audio.currentTime/audio.duration*100 +"%"
+        if(!isDragging) {
+            const progress = (audio.currentTime / audio.duration) * 100
+            document.querySelector(".progress-fill").style.width = progress + "%"
+            ball.style.left = progress + "%"
+        }
         document.querySelector(".songtime").innerHTML=formatTime(audio.currentTime)+"/"+formatTime(audio.duration)
     })
     audio.addEventListener("ended",()=>{
+        if(songs.length === 0 || cur_song === -1) return
         if(loop || cur_song!=songs.length-1){  
             next.click()
         }
@@ -131,26 +164,26 @@ function attachEventListeners(){
         if(isDragging)return
         const rect = timeBar.getBoundingClientRect()
         const clickX = e.clientX - rect.left
-        const per = clickX / rect.width
-        ball.style.left = (per * 100) + "%"
-        audio.currentTime = audio.duration * per
+        const per = (clickX / rect.width) * 100
+        ball.style.left = per + "%"
+        document.querySelector(".progress-fill").style.width = per + "%"
+        audio.currentTime = audio.duration * (per / 100)
     })
     ball.addEventListener("mousedown", (e) => {
       e.preventDefault()
       isDragging = true
-      ball.style.cursor = "grabbing"
       const rect = timeBar.getBoundingClientRect()
       function onMove(ev) {
         const moveX = Math.min(Math.max(ev.clientX - rect.left, 0), rect.width)
-        const per = moveX / rect.width
-        ball.style.left = (per * 100) + "%"
+        const per = (moveX / rect.width) * 100
+        ball.style.left = per + "%"
+        document.querySelector(".progress-fill").style.width = per + "%"
       }
       function onUp(ev) {
         const releaseX = Math.min(Math.max(ev.clientX - rect.left, 0), rect.width)
-        const per = releaseX / rect.width
-        audio.currentTime = audio.duration * per
+        const per = (releaseX / rect.width) * 100
+        audio.currentTime = audio.duration * (per / 100)
         isDragging = false
-        ball.style.cursor = "grab"
         window.removeEventListener("mousemove", onMove)
         window.removeEventListener("mouseup", onUp)
       }
