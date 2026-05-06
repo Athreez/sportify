@@ -1,0 +1,16 @@
+{
+  "playlists": [
+    {
+      "name": "Top-Hit",
+      "path": "playlists/Top-Hit"
+    },
+    {
+      "name": "Top-Hindi",
+      "path": "playlists/Top-Hindi"
+    },
+    {
+      "name": "Trending-Global",
+      "path": "playlists/Trending-Global"
+    }
+  ]
+}

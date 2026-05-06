@@ -1,0 +1,8 @@
+{
+  "name": "sportify",
+  "version": "1.0.0",
+  "description": "Music streaming platform",
+  "scripts": {
+    "build": "echo 'Static site ready'"
+  }
+}
